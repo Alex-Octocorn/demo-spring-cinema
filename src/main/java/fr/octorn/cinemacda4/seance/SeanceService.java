@@ -1,10 +1,13 @@
 package fr.octorn.cinemacda4.seance;
 
 import fr.octorn.cinemacda4.film.FilmService;
+import fr.octorn.cinemacda4.film.exceptions.BadRequestException;
 import fr.octorn.cinemacda4.salle.Salle;
 import fr.octorn.cinemacda4.salle.SalleService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,11 +30,32 @@ public class SeanceService {
     }
 
     public Seance save(Seance seance) {
+
+        verifySeance(seance);
+
         seance.setSalle(salleService.findById(seance.getSalle().getId()));
         seance.setFilm(filmService.findById(seance.getFilm().getId()));
+
+
         seance.setPlacesDisponibles(seance.getSalle().getCapacite());
 
         return seanceRepository.save(seance);
+    }
+
+    private static void verifySeance(Seance seance) {
+        List<String> errors = new ArrayList<>();
+
+        if (seance.getDate().isBefore(LocalDateTime.now())) {
+            errors.add("La date de la séance ne peut pas être dans le passé");
+        }
+
+        if (seance.getPrix() < 0) {
+            errors.add("Le prix ne peut pas être négatif");
+        }
+
+        if (!errors.isEmpty()) {
+            throw new BadRequestException(errors);
+        }
     }
 
     public Seance findById(Integer id) {

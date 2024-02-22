@@ -4,6 +4,7 @@ import fr.octorn.cinemacda4.seance.Seance;
 import fr.octorn.cinemacda4.seance.SeanceService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,11 +23,36 @@ public class TicketService {
     }
 
     public Ticket save(Ticket ticket) {
+
         Seance seance = seanceService.findById(ticket.getSeance().getId());
-        seance.setPlacesDisponibles(seance.getPlacesDisponibles() - ticket.getNombrePlaces());
+        int placesDisponibles = seance.getPlacesDisponibles();
+
+        verifyTicket(ticket, placesDisponibles);
+
+        seance.setPlacesDisponibles(placesDisponibles - ticket.getNombrePlaces());
+
         seanceService.update(seance, seance.getId());
         ticket.setSeance(seance);
         return ticketRepository.save(ticket);
+    }
+
+    private static void verifyTicket(Ticket ticket, int placesDisponibles) {
+        List<String> errors = new ArrayList<>();
+        if (ticket.getNombrePlaces() < 1) {
+            errors.add("Le nombre de places doit être supérieur à 0");
+        }
+
+        if (ticket.getNomClient().isEmpty()) {
+            errors.add("Le nom du client ne peut pas être vide");
+        }
+
+        if (ticket.getNombrePlaces() > placesDisponibles) {
+            errors.add("Il n'y a pas assez de places disponibles pour cette séance");
+        }
+
+        if (!errors.isEmpty()) {
+            throw new RuntimeException(errors.toString());
+        }
     }
 
     public Ticket findById(Integer id) {
