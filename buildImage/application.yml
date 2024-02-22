@@ -1,0 +1,26 @@
+spring:
+  data:
+    jdbc:
+      repositories:
+        enabled: true
+  datasource:
+    url: jdbc:mysql://mysql:3306/cinema?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: cinemadmin
+    password: pass4cinemadmin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+springdoc:
+  swagger-ui:
+    path: /api/cinema/docs
+  api-docs:
+    path: /api/cinema/docs
+
+server:
+  port: 80

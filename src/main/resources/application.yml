@@ -15,3 +15,9 @@ server:
   error:
     include-stacktrace: never
   port: 8080
+
+springdoc:
+  swagger-ui:
+    path: /api/cinema/docs
+  api-docs:
+    path: /api/cinema/docs
