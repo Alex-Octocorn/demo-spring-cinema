@@ -12,24 +12,24 @@ public class SalleService {
         this.salleRepository = salleRepository;
     }
 
-    List<Salle> findAll() {
+    public List<Salle> findAll() {
         return salleRepository.findAll();
     }
 
-    Salle findById(Integer id) {
+    public Salle findById(Integer id) {
         return salleRepository.findById(id).orElseThrow( () -> new RuntimeException("Salle not found"));
     }
 
-    Salle save(Salle salle) {
+    public Salle save(Salle salle) {
         return salleRepository.save(salle);
     }
 
-    void deleteById(Integer id) {
+    public void deleteById(Integer id) {
         this.findById(id);
         salleRepository.deleteById(id);
     }
 
-    Salle update(Salle salle, Integer id) {
+    public Salle update(Salle salle, Integer id) {
         salle.setId(id);
         this.findById(id);
         return salleRepository.save(salle);

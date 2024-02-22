@@ -1,5 +1,7 @@
 package fr.octorn.cinemacda4.seance;
 
+import fr.octorn.cinemacda4.seance.dto.SeanceReduit;
+import fr.octorn.cinemacda4.seance.mapper.SeanceMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,10 +10,16 @@ import java.util.List;
 @RequestMapping("seances")
 public class SeanceController {
 
-    private SeanceService seanceService;
+    private final SeanceService seanceService;
 
-    public SeanceController(SeanceService seanceService) {
+    private final SeanceMapper seanceMapper;
+
+    public SeanceController(
+            SeanceService seanceService,
+            SeanceMapper seanceMapper
+    ) {
         this.seanceService = seanceService;
+        this.seanceMapper = seanceMapper;
     }
 
     @GetMapping
@@ -25,8 +33,8 @@ public class SeanceController {
     }
 
     @PostMapping
-    public Seance save(@RequestBody Seance seance) {
-        return seanceService.save(seance);
+    public SeanceReduit save(@RequestBody Seance seance) {
+        return seanceMapper.toSeanceReduit(seanceService.save(seance));
     }
 
     @PutMapping("{id}")
