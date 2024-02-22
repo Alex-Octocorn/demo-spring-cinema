@@ -2,6 +2,10 @@ package fr.octorn.cinemacda4.seance;
 
 import fr.octorn.cinemacda4.seance.dto.SeanceReduit;
 import fr.octorn.cinemacda4.seance.mapper.SeanceMapper;
+import fr.octorn.cinemacda4.ticket.Ticket;
+import fr.octorn.cinemacda4.ticket.TicketService;
+import fr.octorn.cinemacda4.ticket.dto.TicketReduitDto;
+import fr.octorn.cinemacda4.ticket.mapper.TicketMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,14 +16,22 @@ public class SeanceController {
 
     private final SeanceService seanceService;
 
+    private final TicketService ticketService;
+
     private final SeanceMapper seanceMapper;
+
+    private final TicketMapper ticketMapper;
 
     public SeanceController(
             SeanceService seanceService,
-            SeanceMapper seanceMapper
+            TicketService ticketService,
+            SeanceMapper seanceMapper,
+            TicketMapper ticketMapper
     ) {
         this.seanceService = seanceService;
+        this.ticketService = ticketService;
         this.seanceMapper = seanceMapper;
+        this.ticketMapper = ticketMapper;
     }
 
     @GetMapping
@@ -46,5 +58,11 @@ public class SeanceController {
     @DeleteMapping("{id}")
     public void deleteById(@PathVariable Integer id) {
         seanceService.deleteById(id);
+    }
+
+    @PostMapping("{id}/reserver")
+    public TicketReduitDto reserver(@PathVariable Integer id, @RequestBody Ticket ticket) {
+        ticket.setSeance(seanceService.findById(id));
+        return ticketMapper.toTicketReduitDto(ticketService.save(ticket));
     }
 }
