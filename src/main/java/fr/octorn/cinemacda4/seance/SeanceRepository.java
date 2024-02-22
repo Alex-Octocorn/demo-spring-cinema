@@ -9,5 +9,8 @@ import java.util.List;
 public interface SeanceRepository extends JpaRepository<Seance, Integer>{
     List<Seance> findAllByDateBetween(LocalDateTime debut, LocalDateTime fin);
 
-    List<Seance> findAllByFilmId(Integer filmId);
+    List<Seance> findAllByFilmIdAndDateAfter(Integer filmId, LocalDateTime date);
+
+    List<Seance> findAllByFilmIdAndDateBetween(Integer id, LocalDateTime start, LocalDateTime end);
+
 }

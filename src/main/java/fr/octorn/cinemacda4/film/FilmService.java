@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +116,12 @@ public class FilmService {
     }
 
     public List<Seance> findSeancesByFilm(Integer id) {
-        return seanceRepository.findAllByFilmId(id);
+        return seanceRepository.findAllByFilmIdAndDateAfter(id, LocalDateTime.now());
+    }
+
+    public List<Seance> findSeancesByFilmAndDate(Integer id, String date) {
+        LocalDateTime dateRecherche = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MIN.toLocalTime());
+        LocalDateTime dateRechercheMax = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MAX.toLocalTime());
+        return seanceRepository.findAllByFilmIdAndDateBetween(id, dateRecherche, dateRechercheMax);
     }
 }

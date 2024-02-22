@@ -85,6 +85,6 @@ public class SeanceService {
     }
 
     public List<Seance> findSeancesByFilmId(Integer id) {
-        return seanceRepository.findAllByFilmId(id);
+        return seanceRepository.findAllByFilmIdAndDateAfter(id, LocalDateTime.now());
     }
 }

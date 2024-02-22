@@ -90,7 +90,10 @@ public class FilmController {
     }
 
     @GetMapping("/{id}/seances")
-    public List<SeanceSansFilm> findSeancesByFilm(@PathVariable Integer id) {
+    public List<SeanceSansFilm> findSeancesByFilm(@PathVariable Integer id, @RequestParam(required = false) String date) {
+        if (date != null) {
+            return seanceMapper.toSeancesSansFilm(filmService.findSeancesByFilmAndDate(id, date));
+        }
         return seanceMapper.toSeancesSansFilm(filmService.findSeancesByFilm(id));
     }
 }
