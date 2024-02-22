@@ -34,4 +34,9 @@ public class SalleController {
         return salleService.update(salle, id);
     }
 
+    @GetMapping("/disponible")
+    public List<Salle> findAllAvailableByDate(@RequestParam String date) {
+        return salleService.findAllAvailableByDate(date);
+    }
+
 }

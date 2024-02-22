@@ -13,4 +13,5 @@ public interface SeanceRepository extends JpaRepository<Seance, Integer>{
 
     List<Seance> findAllByFilmIdAndDateBetween(Integer id, LocalDateTime start, LocalDateTime end);
 
+    List<Seance> findAllBySalleIdAndDateBetween(Integer salleId, LocalDateTime start, LocalDateTime end);
 }
