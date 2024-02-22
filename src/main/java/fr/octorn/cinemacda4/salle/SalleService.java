@@ -17,7 +17,7 @@ public class SalleService {
     }
 
     Salle findById(Integer id) {
-        return salleRepository.findById(id).orElse(null);
+        return salleRepository.findById(id).orElseThrow( () -> new RuntimeException("Salle not found"));
     }
 
     Salle save(Salle salle) {
@@ -25,6 +25,13 @@ public class SalleService {
     }
 
     void deleteById(Integer id) {
+        this.findById(id);
         salleRepository.deleteById(id);
+    }
+
+    Salle update(Salle salle, Integer id) {
+        salle.setId(id);
+        this.findById(id);
+        return salleRepository.save(salle);
     }
 }

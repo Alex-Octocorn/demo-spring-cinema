@@ -31,7 +31,7 @@ public class SalleController {
     @PutMapping("{id}")
     public Salle update(@RequestBody Salle salle, @PathVariable Integer id) {
         salle.setId(id);
-        return salleService.save(salle);
+        return salleService.update(salle, id);
     }
 
 }
