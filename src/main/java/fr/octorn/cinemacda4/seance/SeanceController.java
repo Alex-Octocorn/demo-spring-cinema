@@ -5,6 +5,7 @@ import fr.octorn.cinemacda4.seance.mapper.SeanceMapper;
 import fr.octorn.cinemacda4.ticket.Ticket;
 import fr.octorn.cinemacda4.ticket.TicketService;
 import fr.octorn.cinemacda4.ticket.dto.TicketReduitDto;
+import fr.octorn.cinemacda4.ticket.dto.TicketSansFilmNiSeanceDto;
 import fr.octorn.cinemacda4.ticket.mapper.TicketMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,5 +65,10 @@ public class SeanceController {
     public TicketReduitDto reserver(@PathVariable Integer id, @RequestBody Ticket ticket) {
         ticket.setSeance(seanceService.findById(id));
         return ticketMapper.toTicketReduitDto(ticketService.save(ticket));
+    }
+
+    @GetMapping("{id}/tickets")
+    public List<TicketSansFilmNiSeanceDto> findTicketsBySeanceId(@PathVariable Integer id) {
+        return ticketMapper.toTicketsSansFilmDto(ticketService.findTicketsBySeanceId(id));
     }
 }

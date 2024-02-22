@@ -73,4 +73,8 @@ public class TicketService {
     public List<Ticket> findAll() {
         return ticketRepository.findAll();
     }
+
+    public List<Ticket> findTicketsBySeanceId(Integer id) {
+        return ticketRepository.findAllBySeanceId(id);
+    }
 }
