@@ -1,6 +1,5 @@
 package fr.octorn.cinemacda4.realisateur;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.octorn.cinemacda4.film.Film;
 import fr.octorn.cinemacda4.film.FilmService;
 import fr.octorn.cinemacda4.film.dto.FilmMiniDto;
@@ -14,17 +13,13 @@ import java.util.List;
 @Service
 public class RealisateurService {
     private final RealisateurRepository realisateurRepository;
-    private final ObjectMapper objectMapper;
-
     private final FilmService filmService;
 
     public RealisateurService(
             RealisateurRepository realisateurRepository,
-            ObjectMapper objectMapper,
             FilmService filmService
     ) {
         this.realisateurRepository = realisateurRepository;
-        this.objectMapper = objectMapper;
         this.filmService = filmService;
     }
 
@@ -78,11 +73,16 @@ public class RealisateurService {
         realisateurAvecFilmsDto.setPrenom(realisateur.getPrenom());
 
         realisateurAvecFilmsDto.setFilms(
-                // On convertir la liste de film en notre DTO FilmMini
-                // pour ne pas avoir d'erreur de type
-                filmsDuRealisateur.stream().map(
-                        film -> objectMapper.convertValue(film, FilmMiniDto.class)
-                ).toList()
+                filmsDuRealisateur.stream()
+                        .map(
+                                film -> {
+                                    FilmMiniDto filmMiniDto = new FilmMiniDto();
+                                    filmMiniDto.setId(film.getId());
+                                    filmMiniDto.setTitre(film.getTitre());
+                                    return filmMiniDto;
+                                }
+                        )
+                        .toList()
         );
 
         // Puis on retourne l'objet qu'on a fabriqué

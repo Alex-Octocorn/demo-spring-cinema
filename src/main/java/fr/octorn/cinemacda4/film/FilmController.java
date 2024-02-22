@@ -1,13 +1,10 @@
 package fr.octorn.cinemacda4.film;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.octorn.cinemacda4.acteur.Acteur;
-import fr.octorn.cinemacda4.acteur.dto.ActeurReduitDto;
 import fr.octorn.cinemacda4.acteur.dto.ActeurSansFilmDto;
 import fr.octorn.cinemacda4.acteur.mapper.ActeurMapper;
 import fr.octorn.cinemacda4.film.dto.FilmCompletDto;
 import fr.octorn.cinemacda4.film.dto.FilmReduitDto;
-import fr.octorn.cinemacda4.film.exceptions.BadRequestException;
 import fr.octorn.cinemacda4.film.mapper.FilmMapper;
 import fr.octorn.cinemacda4.realisateur.Realisateur;
 import org.springframework.http.HttpStatus;
@@ -20,7 +17,6 @@ import java.util.List;
 public class FilmController {
     private final FilmService filmService;
 
-    private final ObjectMapper objectMapper;
 
     private final FilmMapper filmMapper;
 
@@ -28,20 +24,17 @@ public class FilmController {
 
     public FilmController(
             FilmService filmService,
-            ObjectMapper objectMapper,
-            FilmMapper filmMapper, ActeurMapper acteurMapper
+            FilmMapper filmMapper,
+            ActeurMapper acteurMapper
     ) {
         this.filmService = filmService;
-        this.objectMapper = objectMapper;
         this.filmMapper = filmMapper;
         this.acteurMapper = acteurMapper;
     }
 
     @GetMapping
     public List<FilmReduitDto> findAll() {
-        return filmService.findAll().stream().map(
-                film -> objectMapper.convertValue(film, FilmReduitDto.class)
-        ).toList();
+        return filmMapper.toFilmsReduits(filmService.findAll());
     }
 
     @PostMapping
@@ -55,7 +48,7 @@ public class FilmController {
     public FilmCompletDto findById(@PathVariable Integer id) {
         Film film = filmService.findById(id);
 
-        return filmMapper.INSTANCE.toFilmComplet(film);
+        return filmMapper.toFilmComplet(film);
     }
 
     @DeleteMapping("/{id}")
@@ -79,7 +72,7 @@ public class FilmController {
         return acteurMapper.toActeursSansFilm(acteurs);
     }
 
-    @GetMapping("/{id}/realisateurs")
+    @GetMapping("/{id}/realisateur")
     public Realisateur findRealisateursByFilm(@PathVariable Integer id) {
         return filmService.findById(id).getRealisateur();
     }
@@ -88,6 +81,6 @@ public class FilmController {
     public FilmCompletDto addActorToFilm(@PathVariable Integer id, @RequestBody Acteur acteur) {
         Film film = filmService.addActorToFilm(id, acteur);
 
-        return filmMapper.INSTANCE.toFilmComplet(film);
+        return filmMapper.toFilmComplet(film);
     }
 }

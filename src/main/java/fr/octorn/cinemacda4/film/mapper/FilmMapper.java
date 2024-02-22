@@ -5,6 +5,8 @@ import fr.octorn.cinemacda4.film.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface FilmMapper {
     public FilmMapper INSTANCE = Mappers.getMapper(FilmMapper.class);
@@ -15,7 +17,11 @@ public interface FilmMapper {
 
     public FilmReduitDto toFilmReduit(Film film);
 
+    public List<FilmReduitDto> toFilmsReduits(List<Film> films);
+
     public FilmSansActeurDto toFilmSansActeur(Film film);
 
     public FilmSansActeursNiRealisateurDto toFilmSansActeurNiRealisateur(Film film);
+
+    public List<FilmSansActeursNiRealisateurDto> toFilmsSansActeurNiRealisateur(List<Film> films);
 }

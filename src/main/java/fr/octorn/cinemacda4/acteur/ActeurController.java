@@ -1,9 +1,8 @@
 package fr.octorn.cinemacda4.acteur;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.octorn.cinemacda4.acteur.dto.ActeurReduitDto;
 import fr.octorn.cinemacda4.acteur.dto.ActeurSansFilmDto;
-import fr.octorn.cinemacda4.film.dto.FilmSansActeurDto;
+import fr.octorn.cinemacda4.acteur.mapper.ActeurMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,15 +12,15 @@ import java.util.List;
 public class ActeurController {
     private final ActeurService acteurService;
 
-    private final ObjectMapper objectMapper;
+    private final ActeurMapper acteurMapper;
 
 
     public ActeurController(
             ActeurService acteurService,
-            ObjectMapper objectMapper
+            ActeurMapper acteurMapper
     ) {
         this.acteurService = acteurService;
-        this.objectMapper = objectMapper;
+        this.acteurMapper = acteurMapper;
     }
 
     @PostMapping
@@ -34,19 +33,7 @@ public class ActeurController {
 
         Acteur acteur = acteurService.findById(id);
 
-        ActeurReduitDto acteurReduitDto = new ActeurReduitDto();
-
-        acteurReduitDto.setId(acteur.getId());
-        acteurReduitDto.setNom(acteur.getNom());
-        acteurReduitDto.setPrenom(acteur.getPrenom());
-
-        acteurReduitDto.setFilms(
-                acteur.getFilms().stream().map(
-                        film -> objectMapper.convertValue(film, FilmSansActeurDto.class)
-                ).toList()
-        );
-
-        return acteurReduitDto;
+        return acteurMapper.toActeurReduit(acteur);
     }
 
     @DeleteMapping("/{id}")
@@ -59,8 +46,6 @@ public class ActeurController {
 
         List<Acteur> acteurs = acteurService.findAll();
 
-        return acteurs.stream().map(
-                acteur -> objectMapper.convertValue(acteur, ActeurSansFilmDto.class)
-        ).toList();
+        return acteurMapper.toActeursSansFilm(acteurs);
     }
 }
