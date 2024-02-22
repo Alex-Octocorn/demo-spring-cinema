@@ -2,10 +2,8 @@ package fr.octorn.cinemacda4.realisateur;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.octorn.cinemacda4.film.Film;
-import fr.octorn.cinemacda4.film.FilmRepository;
 import fr.octorn.cinemacda4.film.FilmService;
 import fr.octorn.cinemacda4.film.dto.FilmMiniDto;
-import fr.octorn.cinemacda4.film.dto.FilmSansActeursNiRealisateurDto;
 import fr.octorn.cinemacda4.realisateur.dto.RealisateurAvecFilmsDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

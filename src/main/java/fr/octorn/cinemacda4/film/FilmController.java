@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.octorn.cinemacda4.acteur.Acteur;
 import fr.octorn.cinemacda4.acteur.dto.ActeurReduitDto;
 import fr.octorn.cinemacda4.acteur.dto.ActeurSansFilmDto;
+import fr.octorn.cinemacda4.acteur.mapper.ActeurMapper;
 import fr.octorn.cinemacda4.film.dto.FilmCompletDto;
 import fr.octorn.cinemacda4.film.dto.FilmReduitDto;
 import fr.octorn.cinemacda4.film.exceptions.BadRequestException;
+import fr.octorn.cinemacda4.film.mapper.FilmMapper;
 import fr.octorn.cinemacda4.realisateur.Realisateur;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,19 @@ public class FilmController {
 
     private final ObjectMapper objectMapper;
 
+    private final FilmMapper filmMapper;
+
+    private final ActeurMapper acteurMapper;
+
     public FilmController(
             FilmService filmService,
-            ObjectMapper objectMapper
+            ObjectMapper objectMapper,
+            FilmMapper filmMapper, ActeurMapper acteurMapper
     ) {
         this.filmService = filmService;
         this.objectMapper = objectMapper;
+        this.filmMapper = filmMapper;
+        this.acteurMapper = acteurMapper;
     }
 
     @GetMapping
@@ -46,20 +55,7 @@ public class FilmController {
     public FilmCompletDto findById(@PathVariable Integer id) {
         Film film = filmService.findById(id);
 
-        FilmCompletDto filmCompletDto = new FilmCompletDto();
-        filmCompletDto.setId(film.getId());
-        filmCompletDto.setDuree(film.getDuree());
-        filmCompletDto.setSynopsis(film.getSynopsis());
-        filmCompletDto.setRealisateur(film.getRealisateur());
-        filmCompletDto.setDateSortie(film.getDateSortie());
-        filmCompletDto.setActeurs(
-                film.getActeurs().stream().map(
-                        acteur -> objectMapper.convertValue(acteur, ActeurSansFilmDto.class)
-                ).toList()
-        );
-
-
-        return filmCompletDto;
+        return filmMapper.INSTANCE.toFilmComplet(film);
     }
 
     @DeleteMapping("/{id}")
@@ -80,10 +76,7 @@ public class FilmController {
     @GetMapping("/{id}/acteurs")
     public List<ActeurSansFilmDto> findActeursByFilm(@PathVariable Integer id) {
         List<Acteur> acteurs = filmService.findActeursByFilm(id);
-
-        return acteurs.stream().map(
-                acteur -> objectMapper.convertValue(acteur, ActeurSansFilmDto.class)
-        ).toList();
+        return acteurMapper.toActeursSansFilm(acteurs);
     }
 
     @GetMapping("/{id}/realisateurs")
@@ -95,22 +88,6 @@ public class FilmController {
     public FilmCompletDto addActorToFilm(@PathVariable Integer id, @RequestBody Acteur acteur) {
         Film film = filmService.addActorToFilm(id, acteur);
 
-        FilmCompletDto filmCompletDto = new FilmCompletDto();
-        filmCompletDto.setId(film.getId());
-        filmCompletDto.setDuree(film.getDuree());
-        filmCompletDto.setRealisateur(film.getRealisateur());
-        filmCompletDto.setDateSortie(film.getDateSortie());
-        filmCompletDto.setSynopsis(film.getSynopsis());
-        filmCompletDto.setActeurs(
-                film.getActeurs().stream().map(
-                        unmappedActor -> objectMapper.convertValue(
-                                unmappedActor,
-                                ActeurSansFilmDto.class
-
-                        )
-                ).toList()
-        );
-
-        return filmCompletDto;
+        return filmMapper.INSTANCE.toFilmComplet(film);
     }
 }
