@@ -83,4 +83,8 @@ public class SeanceService {
         LocalDateTime dateRechercheMax = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MAX.toLocalTime());
         return seanceRepository.findAllByDateBetween(dateRecherche, dateRechercheMax);
     }
+
+    public List<Seance> findSeancesByFilmId(Integer id) {
+        return seanceRepository.findAllByFilmId(id);
+    }
 }
