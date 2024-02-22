@@ -1,4 +1,32 @@
-# TP 5 : Faire du chiffre 💰
+# TP - Cinéma 🎬
+
+Ce TP est la correction du TP sur le cinéma.
+
+## Prérequis 📚
+
+- Docker
+- Java 17+
+
+## Lancer le projet 🚀
+
+### Mode Dev 🛠️
+
+```bash
+docker compose up -f docker-compose.dev.yml -d
+mvn spring-boot:run
+```
+
+L'API sera accessible sur le port 8080 et la BDD sur le port 3306.
+
+### Mode Prod 🚀
+
+```bash
+docker compose up --build -d
+```
+
+L'API sera accessible sur le port 80.
+
+# Consignes de l'exercice 📝
 
 ## Objectifs 🎯
 
@@ -30,9 +58,7 @@ Vous serez évalué sur les points suivants :
 
 Maintenant que nous avons fidélisé notre backend, nous allons pouvoir intégrer la gestion des séances de cinéma.
 
-Le diagramme est le suivant :
-
-[![Diagram](../../cours/assets/cinema_diagram.png)](https://www.planttext.com/?text=TL9BJiCm4Dtx55QMHArWQw6gYAghBX3b0gupHICSstWc4WXn8Cx1nR2Tf4agiKdoPZplCywMM4VkMYk4iPf8xj6syalKs2XvyEvLr8mSGSaZHynGEmS9ecDHDrsyVDEdyu6GPYSDGnTJuO34zmy5RKGTGLiadP6IpnCGtwE7u--FTWQMDix9c2hsafQsDblAh-GYZIkvIqzH1wiDq0ufU8Sd2pIu2n4_b3nRhtcca-UNAgvh8VfXoEYW3VAO4Dux3D22up5JdtGpCRwWUGDUKXBaC6fCbJHy-sWnqKohIgLJXATYlbTBbEKgghjAhbPULhVhzKrr8Ucj_zSSzdVLxis9sSfBPtceBBY_gx7ahzjY2wv9_ymV)
+Le diagramme est le suivant : [Diagram](https://www.planttext.com/?text=TL9BJiCm4Dtx55QMHArWQw6gYAghBX3b0gupHICSstWc4WXn8Cx1nR2Tf4agiKdoPZplCywMM4VkMYk4iPf8xj6syalKs2XvyEvLr8mSGSaZHynGEmS9ecDHDrsyVDEdyu6GPYSDGnTJuO34zmy5RKGTGLiadP6IpnCGtwE7u--FTWQMDix9c2hsafQsDblAh-GYZIkvIqzH1wiDq0ufU8Sd2pIu2n4_b3nRhtcca-UNAgvh8VfXoEYW3VAO4Dux3D22up5JdtGpCRwWUGDUKXBaC6fCbJHy-sWnqKohIgLJXATYlbTBbEKgghjAhbPULhVhzKrr8Ucj_zSSzdVLxis9sSfBPtceBBY_gx7ahzjY2wv9_ymV)
 
 ### Fonctionnalités
 
