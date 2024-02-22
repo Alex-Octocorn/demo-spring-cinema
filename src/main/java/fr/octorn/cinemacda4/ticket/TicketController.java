@@ -1,5 +1,7 @@
 package fr.octorn.cinemacda4.ticket;
 
+import fr.octorn.cinemacda4.ticket.dto.TicketReduitDto;
+import fr.octorn.cinemacda4.ticket.mapper.TicketMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,8 +12,14 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    public TicketController(TicketService ticketService) {
+    private final TicketMapper ticketMapper;
+
+    public TicketController(
+            TicketService ticketService,
+            TicketMapper ticketMapper
+    ) {
         this.ticketService = ticketService;
+        this.ticketMapper = ticketMapper;
     }
 
     @GetMapping
@@ -30,7 +38,7 @@ public class TicketController {
     }
 
     @PostMapping
-    public Ticket save(@RequestBody Ticket ticket) {
-        return ticketService.save(ticket);
+    public TicketReduitDto save(@RequestBody Ticket ticket) {
+        return ticketMapper.toTicketReduitDto(ticketService.save(ticket));
     }
 }
