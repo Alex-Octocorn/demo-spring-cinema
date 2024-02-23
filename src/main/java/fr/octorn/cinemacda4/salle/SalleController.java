@@ -8,7 +8,7 @@ import java.util.List;
 @RestController
 @RequestMapping("salles")
 public class SalleController {
-    private SalleService salleService;
+    private final SalleService salleService;
 
     public SalleController(SalleService salleService) {
         this.salleService = salleService;

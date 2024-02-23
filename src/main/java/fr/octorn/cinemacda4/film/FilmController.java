@@ -7,7 +7,6 @@ import fr.octorn.cinemacda4.film.dto.FilmCompletDto;
 import fr.octorn.cinemacda4.film.dto.FilmReduitDto;
 import fr.octorn.cinemacda4.film.mapper.FilmMapper;
 import fr.octorn.cinemacda4.realisateur.Realisateur;
-import fr.octorn.cinemacda4.seance.Seance;
 import fr.octorn.cinemacda4.seance.dto.SeanceSansFilm;
 import fr.octorn.cinemacda4.seance.mapper.SeanceMapper;
 import org.springframework.http.HttpStatus;

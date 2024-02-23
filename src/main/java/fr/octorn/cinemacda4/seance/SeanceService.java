@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -83,9 +82,5 @@ public class SeanceService {
         LocalDateTime dateRecherche = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MIN.toLocalTime());
         LocalDateTime dateRechercheMax = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MAX.toLocalTime());
         return seanceRepository.findAllByDateBetween(dateRecherche, dateRechercheMax);
-    }
-
-    public List<Seance> findSeancesByFilmId(Integer id) {
-        return seanceRepository.findAllByFilmIdAndDateAfter(id, LocalDateTime.now());
     }
 }

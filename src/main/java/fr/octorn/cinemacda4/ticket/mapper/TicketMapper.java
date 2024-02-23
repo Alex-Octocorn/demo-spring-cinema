@@ -11,11 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TicketMapper {
 
-    public TicketMapper INSTANCE = Mappers.getMapper(TicketMapper.class);
+    TicketMapper INSTANCE = Mappers.getMapper(TicketMapper.class);
 
-    public TicketReduitDto toTicketReduitDto(Ticket ticket);
-
-    public TicketSansFilmNiSeanceDto toTicketSansFilmDto(Ticket ticket);
-
-    public List<TicketSansFilmNiSeanceDto> toTicketsSansFilmDto(List<Ticket> tickets);
+    TicketReduitDto toTicketReduitDto(Ticket ticket);
+    List<TicketSansFilmNiSeanceDto> toTicketsSansFilmDto(List<Ticket> tickets);
 }

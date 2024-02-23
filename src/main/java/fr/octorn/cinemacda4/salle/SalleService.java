@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class SalleService {
-    private SalleRepository salleRepository;
+    private final SalleRepository salleRepository;
 
     private final SeanceRepository seanceRepository;
 

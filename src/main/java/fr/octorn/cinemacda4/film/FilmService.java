@@ -6,11 +6,7 @@ import fr.octorn.cinemacda4.exceptions.BadRequestException;
 import fr.octorn.cinemacda4.exceptions.NotFoundException;
 import fr.octorn.cinemacda4.seance.Seance;
 import fr.octorn.cinemacda4.seance.SeanceRepository;
-import fr.octorn.cinemacda4.seance.SeanceService;
-import fr.octorn.cinemacda4.seance.dto.SeanceSansFilm;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

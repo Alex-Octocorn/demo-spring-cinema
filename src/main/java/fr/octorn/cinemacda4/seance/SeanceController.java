@@ -8,10 +8,8 @@ import fr.octorn.cinemacda4.ticket.TicketService;
 import fr.octorn.cinemacda4.ticket.dto.TicketReduitDto;
 import fr.octorn.cinemacda4.ticket.dto.TicketSansFilmNiSeanceDto;
 import fr.octorn.cinemacda4.ticket.mapper.TicketMapper;
-import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController

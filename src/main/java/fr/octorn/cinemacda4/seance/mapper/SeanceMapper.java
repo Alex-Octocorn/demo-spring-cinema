@@ -11,13 +11,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface SeanceMapper {
 
-    public SeanceMapper INSTANCE = Mappers.getMapper(SeanceMapper.class);
+    SeanceMapper INSTANCE = Mappers.getMapper(SeanceMapper.class);
 
-    public SeanceReduit toSeanceReduit(Seance seance);
+    SeanceReduit toSeanceReduit(Seance seance);
 
-    public List<SeanceReduit> toSeancesReduit(List<Seance> seances);
+    List<SeanceReduit> toSeancesReduit(List<Seance> seances);
 
-    public SeanceSansFilm toSeanceSansFilm(Seance seance);
-
-    public List<SeanceSansFilm> toSeancesSansFilm(List<Seance> seances);
+    List<SeanceSansFilm> toSeancesSansFilm(List<Seance> seances);
 }
