@@ -64,26 +64,24 @@ public class FilmService {
         filmRepository.delete(film);
     }
 
-    public Film update(Film film) {
+    public Film update(Film film, Integer id) {
+        if (!filmRepository.existsById(id)) {
+            throw new NotFoundException("Aucun film avec l'ID " + id);
+        }
+        film.setId(id);
         return filmRepository.save(film);
     }
 
     public Film findByTitre(String titre) {
         return filmRepository.findByTitre(titre)
                 .orElseThrow(
-                        () -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "Aucun film avec le titre : " + titre
-                        )
+                        () -> new NotFoundException("Aucun film avec le titre " + titre)
                 );
     }
 
     public List<Film> findAllByRealisateurId(Integer id) {
         return filmRepository.findAllByRealisateurId(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Aucun film ayant ce réalisateur"
-                ));
+                .orElseThrow(() -> new NotFoundException("Aucun film avec le réalisateur ID " + id));
     }
 
     public List<Acteur> findActeursByFilm(Integer id) {

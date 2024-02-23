@@ -56,9 +56,9 @@ public class FilmController {
         filmService.deleteById(id);
     }
 
-    @PutMapping
-    public Film update(@RequestBody Film film) {
-        return filmService.update(film);
+    @PutMapping("/{id}")
+    public Film update(@RequestBody Film film, @PathVariable Integer id) {
+        return filmService.update(film, id);
     }
 
     @GetMapping("/search") // /film/search?titre=toto

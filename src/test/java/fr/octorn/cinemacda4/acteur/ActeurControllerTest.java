@@ -103,15 +103,16 @@ class ActeurControllerTest {
         // Act
         mockMvc.perform(post("/acteurs")
                 .contentType("application/json")
-                .content("{\n" +
-                        "  \"nom\": \"test\",\n" +
-                        "  \"prenom\": \"test\",\n" +
-                        "  \"films\": [\n" +
-                        "    {\n" +
-                        "      \"titre\": \"test\"\n" +
-                        "    }\n" +
-                        "  ]\n" +
-                        "}")
+                .content("""
+                        {
+                          "nom": "test",
+                          "prenom": "test",
+                          "films": [
+                            {
+                              "titre": "test"
+                            }
+                          ]
+                        }""")
         ).andExpect(status().isCreated());
 
         // Assert
