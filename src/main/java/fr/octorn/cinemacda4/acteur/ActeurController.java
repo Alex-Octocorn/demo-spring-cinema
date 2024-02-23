@@ -39,8 +39,8 @@ public class ActeurController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@RequestBody Acteur acteur) {
-        acteurService.delete(acteur);
+    public void delete(@PathVariable int id) {
+        acteurService.delete(id);
     }
 
     @GetMapping

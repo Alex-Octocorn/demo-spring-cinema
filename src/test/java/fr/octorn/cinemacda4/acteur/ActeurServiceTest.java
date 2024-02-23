@@ -109,7 +109,7 @@ class ActeurServiceTest {
         when(acteurRepository.findById(1)).thenReturn(java.util.Optional.of(acteurMock));
 
         // Act
-        acteurService.delete(acteurMock);
+        acteurService.delete(acteurMock.getId());
         // Assert
         verify(acteurRepository).delete(acteurMock);
     }

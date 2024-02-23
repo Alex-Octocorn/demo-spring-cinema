@@ -46,8 +46,8 @@ public class ActeurService {
         );
     }
 
-    public void delete(Acteur acteur) {
-        this.findById(acteur.getId());
+    public void delete(int id) {
+        Acteur acteur = this.findById(id);
         acteurRepository.delete(acteur);
     }
 
