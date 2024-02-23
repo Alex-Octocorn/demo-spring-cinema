@@ -7,6 +7,9 @@ import fr.octorn.cinemacda4.film.dto.FilmCompletDto;
 import fr.octorn.cinemacda4.film.dto.FilmReduitDto;
 import fr.octorn.cinemacda4.film.mapper.FilmMapper;
 import fr.octorn.cinemacda4.realisateur.Realisateur;
+import fr.octorn.cinemacda4.seance.Seance;
+import fr.octorn.cinemacda4.seance.dto.SeanceSansFilm;
+import fr.octorn.cinemacda4.seance.mapper.SeanceMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,19 +20,21 @@ import java.util.List;
 public class FilmController {
     private final FilmService filmService;
 
-
     private final FilmMapper filmMapper;
 
     private final ActeurMapper acteurMapper;
+    private final SeanceMapper seanceMapper;
 
     public FilmController(
             FilmService filmService,
             FilmMapper filmMapper,
-            ActeurMapper acteurMapper
+            ActeurMapper acteurMapper,
+            SeanceMapper seanceMapper
     ) {
         this.filmService = filmService;
         this.filmMapper = filmMapper;
         this.acteurMapper = acteurMapper;
+        this.seanceMapper = seanceMapper;
     }
 
     @GetMapping
@@ -82,5 +87,13 @@ public class FilmController {
         Film film = filmService.addActorToFilm(id, acteur);
 
         return filmMapper.toFilmComplet(film);
+    }
+
+    @GetMapping("/{id}/seances")
+    public List<SeanceSansFilm> findSeancesByFilm(@PathVariable Integer id, @RequestParam(required = false) String date) {
+        if (date != null) {
+            return seanceMapper.toSeancesSansFilm(filmService.findSeancesByFilmAndDate(id, date));
+        }
+        return seanceMapper.toSeancesSansFilm(filmService.findSeancesByFilm(id));
     }
 }

@@ -12,7 +12,7 @@ Ce TP est la correction du TP sur le cinéma.
 ### Mode Dev 🛠️
 
 ```bash
-docker compose up -f docker-compose.dev.yml -d
+ docker-compose -f docker-compose.dev.yml  up -d
 mvn spring-boot:run
 ```
 

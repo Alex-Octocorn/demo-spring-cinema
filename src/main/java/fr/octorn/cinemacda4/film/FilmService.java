@@ -4,10 +4,16 @@ import fr.octorn.cinemacda4.acteur.Acteur;
 import fr.octorn.cinemacda4.acteur.ActeurService;
 import fr.octorn.cinemacda4.film.exceptions.BadRequestException;
 import fr.octorn.cinemacda4.film.exceptions.FilmNotFoundException;
+import fr.octorn.cinemacda4.seance.Seance;
+import fr.octorn.cinemacda4.seance.SeanceRepository;
+import fr.octorn.cinemacda4.seance.SeanceService;
+import fr.octorn.cinemacda4.seance.dto.SeanceSansFilm;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +23,16 @@ public class FilmService {
 
     private final ActeurService acteurService;
 
-    public FilmService(FilmRepository filmRepository, ActeurService acteurService) {
+    private final SeanceRepository seanceRepository;
+
+    public FilmService(
+            FilmRepository filmRepository,
+            ActeurService acteurService,
+            SeanceRepository seanceRepository
+    ) {
         this.filmRepository = filmRepository;
         this.acteurService = acteurService;
+        this.seanceRepository = seanceRepository;
     }
 
     public List<Film> findAll() {
@@ -100,5 +113,15 @@ public class FilmService {
         film.getActeurs().add(acteur);
 
         return this.save(film);
+    }
+
+    public List<Seance> findSeancesByFilm(Integer id) {
+        return seanceRepository.findAllByFilmIdAndDateAfter(id, LocalDateTime.now());
+    }
+
+    public List<Seance> findSeancesByFilmAndDate(Integer id, String date) {
+        LocalDateTime dateRecherche = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MIN.toLocalTime());
+        LocalDateTime dateRechercheMax = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MAX.toLocalTime());
+        return seanceRepository.findAllByFilmIdAndDateBetween(id, dateRecherche, dateRechercheMax);
     }
 }
