@@ -7,6 +7,7 @@ import fr.octorn.cinemacda4.acteur.ActeurService;
 import fr.octorn.cinemacda4.exceptions.BadRequestException;
 import fr.octorn.cinemacda4.exceptions.NotFoundException;
 import fr.octorn.cinemacda4.realisateur.Realisateur;
+import fr.octorn.cinemacda4.seance.SeanceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,9 @@ class FilmServiceTest {
     @MockBean
     private ActeurService acteurService;
 
+    @MockBean
+    private SeanceRepository seanceRepository;
+
     private Film filmMock;
 
     private Acteur acteurMock;
@@ -43,7 +47,7 @@ class FilmServiceTest {
 
     @BeforeEach
     void setUp() {
-        filmService = new FilmService(filmRepository, acteurService);
+        filmService = new FilmService(filmRepository, acteurService, seanceRepository);
 
         realisateurMock = Realisateur.builder()
                 .id(1)

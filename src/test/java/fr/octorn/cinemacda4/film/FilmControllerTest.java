@@ -4,17 +4,13 @@ import fr.octorn.cinemacda4.acteur.Acteur;
 import fr.octorn.cinemacda4.acteur.mapper.ActeurMapper;
 import fr.octorn.cinemacda4.film.mapper.FilmMapper;
 import fr.octorn.cinemacda4.realisateur.Realisateur;
+import fr.octorn.cinemacda4.seance.mapper.SeanceMapper;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -43,6 +39,9 @@ class FilmControllerTest {
 
     @MockBean
     private ActeurMapper acteurMapper;
+
+    @MockBean
+    private SeanceMapper seanceMapper;
 
     private Film filmMock;
 
