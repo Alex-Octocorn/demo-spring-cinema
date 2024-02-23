@@ -1,8 +1,8 @@
 package fr.octorn.cinemacda4.seance;
 
+import fr.octorn.cinemacda4.exceptions.NotFoundException;
 import fr.octorn.cinemacda4.film.FilmService;
-import fr.octorn.cinemacda4.film.exceptions.BadRequestException;
-import fr.octorn.cinemacda4.salle.Salle;
+import fr.octorn.cinemacda4.exceptions.BadRequestException;
 import fr.octorn.cinemacda4.salle.SalleService;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +59,7 @@ public class SeanceService {
     }
 
     public Seance findById(Integer id) {
-        return seanceRepository.findById(id).orElseThrow(() -> new RuntimeException("Seance not found"));
+        return seanceRepository.findById(id).orElseThrow(() -> new NotFoundException("Aucune séance avec l'ID " + id));
     }
 
     public void deleteById(Integer id) {

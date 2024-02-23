@@ -2,8 +2,8 @@ package fr.octorn.cinemacda4.film;
 
 import fr.octorn.cinemacda4.acteur.Acteur;
 import fr.octorn.cinemacda4.acteur.ActeurService;
-import fr.octorn.cinemacda4.film.exceptions.BadRequestException;
-import fr.octorn.cinemacda4.film.exceptions.FilmNotFoundException;
+import fr.octorn.cinemacda4.exceptions.BadRequestException;
+import fr.octorn.cinemacda4.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -55,7 +55,7 @@ public class FilmService {
     public Film findById(Integer id) {
         return filmRepository.findById(id)
                 .orElseThrow(
-                        () -> new FilmNotFoundException(id)
+                        () -> new NotFoundException("Aucun film avec l'ID " + id)
                 );
     }
 

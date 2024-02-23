@@ -2,6 +2,7 @@ package fr.octorn.cinemacda4.seance;
 
 import fr.octorn.cinemacda4.seance.dto.SeanceReduit;
 import fr.octorn.cinemacda4.seance.mapper.SeanceMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class SeanceController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public SeanceReduit save(@RequestBody Seance seance) {
         return seanceMapper.toSeanceReduit(seanceService.save(seance));
     }

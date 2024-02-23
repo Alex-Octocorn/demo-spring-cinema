@@ -4,6 +4,7 @@ import fr.octorn.cinemacda4.film.Film;
 import fr.octorn.cinemacda4.film.dto.FilmSansActeursNiRealisateurDto;
 import fr.octorn.cinemacda4.film.mapper.FilmMapper;
 import fr.octorn.cinemacda4.realisateur.dto.RealisateurAvecFilmsDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class RealisateurController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Realisateur save(@RequestBody Realisateur realisateur) {
         return realisateurService.save(realisateur);
     }

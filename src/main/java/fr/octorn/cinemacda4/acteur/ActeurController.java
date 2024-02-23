@@ -3,6 +3,7 @@ package fr.octorn.cinemacda4.acteur;
 import fr.octorn.cinemacda4.acteur.dto.ActeurReduitDto;
 import fr.octorn.cinemacda4.acteur.dto.ActeurSansFilmDto;
 import fr.octorn.cinemacda4.acteur.mapper.ActeurMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class ActeurController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Acteur save(@RequestBody Acteur entity) {
         return acteurService.save(entity);
     }

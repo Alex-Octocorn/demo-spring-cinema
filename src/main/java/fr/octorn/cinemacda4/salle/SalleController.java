@@ -1,5 +1,6 @@
 package fr.octorn.cinemacda4.salle;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class SalleController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Salle save(@RequestBody Salle salle) {
         return salleService.save(salle);
     }

@@ -1,5 +1,6 @@
 package fr.octorn.cinemacda4.salle;
 
+import fr.octorn.cinemacda4.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class SalleService {
     }
 
     public Salle findById(Integer id) {
-        return salleRepository.findById(id).orElseThrow( () -> new RuntimeException("Salle not found"));
+        return salleRepository.findById(id).orElseThrow( () -> new NotFoundException("Aucune salle avec l'ID " + id));
     }
 
     public Salle save(Salle salle) {

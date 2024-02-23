@@ -1,5 +1,6 @@
 package fr.octorn.cinemacda4.realisateur;
 
+import fr.octorn.cinemacda4.exceptions.NotFoundException;
 import fr.octorn.cinemacda4.film.Film;
 import fr.octorn.cinemacda4.film.FilmService;
 import fr.octorn.cinemacda4.film.dto.FilmMiniDto;
@@ -31,13 +32,12 @@ public class RealisateurService {
         return realisateurRepository.save(realisateur);
     }
 
-    public Realisateur findById(int integer) {
+    public Realisateur findById(int id) {
         return realisateurRepository
-                .findById(integer)
+                .findById(id)
                 .orElseThrow(
-                        () -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
-                                "Realisateur not found"
+                        () -> new NotFoundException(
+                                "Aucun réalisateur avec l'ID " + id
                         )
                 );
     }

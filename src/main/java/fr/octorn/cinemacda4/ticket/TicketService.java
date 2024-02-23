@@ -1,5 +1,6 @@
 package fr.octorn.cinemacda4.ticket;
 
+import fr.octorn.cinemacda4.exceptions.NotFoundException;
 import fr.octorn.cinemacda4.seance.Seance;
 import fr.octorn.cinemacda4.seance.SeanceService;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class TicketService {
     }
 
     public Ticket findById(Integer id) {
-        return ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        return ticketRepository.findById(id).orElseThrow(() -> new NotFoundException("Aucun ticket avec l'ID " + id));
     }
 
     public void deleteById(Integer id) {
