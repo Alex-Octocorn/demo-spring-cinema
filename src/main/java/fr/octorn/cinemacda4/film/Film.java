@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import fr.octorn.cinemacda4.acteur.Acteur;
 import fr.octorn.cinemacda4.realisateur.Realisateur;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,6 +20,8 @@ import java.util.List;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
+@Builder
+@AllArgsConstructor
 public class Film {
     @Id
     @GeneratedValue
