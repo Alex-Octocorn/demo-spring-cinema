@@ -6,8 +6,10 @@ import fr.octorn.cinemacda4.exceptions.BadRequestException;
 import fr.octorn.cinemacda4.salle.SalleService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -49,7 +51,7 @@ public class SeanceService {
             errors.add("La date de la séance ne peut pas être dans le passé");
         }
 
-        if (seance.getPrix() < 0) {
+        if (seance.getPrix() <= 0) {
             errors.add("Le prix ne peut pas être négatif");
         }
 
@@ -75,5 +77,15 @@ public class SeanceService {
 
     public List<Seance> findAll() {
         return seanceRepository.findAll();
+    }
+
+    public List<Seance> findAllByDate(String date) {
+        LocalDateTime dateRecherche = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MIN.toLocalTime());
+        LocalDateTime dateRechercheMax = LocalDateTime.of(LocalDate.parse(date), LocalDateTime.MAX.toLocalTime());
+        return seanceRepository.findAllByDateBetween(dateRecherche, dateRechercheMax);
+    }
+
+    public List<Seance> findSeancesByFilmId(Integer id) {
+        return seanceRepository.findAllByFilmIdAndDateAfter(id, LocalDateTime.now());
     }
 }
